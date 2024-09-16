@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.28)
+project(TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II main.cpp)
