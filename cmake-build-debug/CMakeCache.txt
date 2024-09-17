@@ -215,6 +215,21 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//The directory containing a CMake configuration file for Qt5Charts.
+Qt5Charts_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Charts
+
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for Qt5.
+Qt5_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
+
 //Value Computed by CMake
 TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II_BINARY_DIR:STATIC=/home/emanuel/CLionProjects/TareaExtraclase2_Algoritmos-y-Estructuras-de-Datos-II/cmake-build-debug
 
