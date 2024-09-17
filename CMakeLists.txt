@@ -12,7 +12,10 @@ find_package(Qt5 COMPONENTS Widgets Charts REQUIRED)
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${Qt5Charts_INCLUDE_DIRS})
 
 # Agregar los archivos fuente de tu proyecto
-add_executable(TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II main.cpp)
+add_executable(TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II main.cpp
+        Algoritmos.cpp
+        LinkedList.cpp
+        BinarySearchTree.cpp)
 
 # Enlazar las bibliotecas de Qt con tu proyecto
 target_link_libraries(TareaExtraclase2_Algoritmos_y_Estructuras_de_Datos_II Qt5::Widgets Qt5::Charts)
