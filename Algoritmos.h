@@ -1,17 +1,20 @@
-
 #ifndef ALGORITMOS_H
 #define ALGORITMOS_H
-
 
 // Declaracion de la función Bubble Sort
 void bubbleSort(int arr[], int n);
 
-//Declaracion del algoritmo Selection Sort
-void selectionSortI(int arr[], int n);
+// Declaracion de la función Selection Sort
+void selectionSort(int arr[], int n);
 
-
-//Declaracion de funciones para MergeSort
+// Declaracion de las funciones para Merge Sort
 void merge(int arr[], int left, int mid, int right);
 void mergeSort(int arr[], int left, int right);
 
-#endif //ALGORITMOS_H
+// Función para generar un arreglo con los elementos en orden inverso (peor caso)
+void generateWorstCase(int arr[], int n);
+
+// Función general para medir el tiempo de ejecución de cualquier algoritmo
+double measureTime(int n, void (*sortFunction)(int[], int));
+
+#endif // ALGORITMOS_H
