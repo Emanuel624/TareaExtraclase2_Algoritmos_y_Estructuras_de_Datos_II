@@ -1,18 +1,28 @@
 #include "Algoritmos.h"
 #include <chrono>
+#include <random>  // Para generar números aleatorios
 
-// Implementación Bubble Sort para arreglos de enteros
+// Implementación optimizada de Bubble Sort para arreglos de enteros
 void bubbleSort(int arr[], int n) {
+    bool swapped;
     for (int i = 0; i < n - 1; i++) {
+        swapped = false;
         for (int j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
+                // Intercambiar elementos si están fuera de orden
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
+                swapped = true;
             }
+        }
+        // Si no hubo intercambios en una pasada completa, el arreglo ya está ordenado
+        if (!swapped) {
+            break;
         }
     }
 }
+
 
 // Implementación Selection Sort
 void selectionSort(int arr[], int n) {
@@ -68,10 +78,35 @@ void generateWorstCase(int arr[], int n) {
     }
 }
 
+// Generar el mejor caso (arreglo ya ordenado en orden ascendente)
+void generateBestCase(int arr[], int n) {
+    for (int i = 0; i < n; ++i) {
+        arr[i] = i + 1;  // Llenar el arreglo en orden ascendente
+    }
+}
+
+// Generar un caso promedio (arreglo con números aleatorios)
+void generateAverageCase(int arr[], int n) {
+    std::random_device rd;  // Semilla aleatoria
+    std::mt19937 gen(rd());  // Generador Mersenne Twister
+    std::uniform_int_distribution<> dist(1, n);  // Distribución uniforme entre 1 y n
+
+    for (int i = 0; i < n; ++i) {
+        arr[i] = dist(gen);  // Llenar el arreglo con valores aleatorios
+    }
+}
+
 // Función para medir el tiempo de ejecución de cualquier algoritmo
-double measureTime(int n, void (*sortFunction)(int[], int)) {
+double measureTime(int n, void (*sortFunction)(int[], int), std::string caseType) {
     int* arr = new int[n];
-    generateWorstCase(arr, n);  // Generar el peor caso
+
+    if (caseType == "best") {
+        generateBestCase(arr, n);  // Generar el mejor caso
+    } else if (caseType == "worst") {
+        generateWorstCase(arr, n);  // Generar el peor caso
+    } else if (caseType == "average") {
+        generateAverageCase(arr, n);  // Generar el caso promedio
+    }
 
     auto start = std::chrono::high_resolution_clock::now();
     sortFunction(arr, n);  // Ejecutar la función de ordenamiento

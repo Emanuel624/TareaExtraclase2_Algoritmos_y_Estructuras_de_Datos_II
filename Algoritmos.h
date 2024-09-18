@@ -1,6 +1,8 @@
 #ifndef ALGORITMOS_H
 #define ALGORITMOS_H
 
+#include <string>
+
 // Declaracion de la función Bubble Sort
 void bubbleSort(int arr[], int n);
 
@@ -14,7 +16,12 @@ void mergeSort(int arr[], int left, int right);
 // Función para generar un arreglo con los elementos en orden inverso (peor caso)
 void generateWorstCase(int arr[], int n);
 
+//Funcion para generar un arreglo con los elementos ya en orden ascedente
+void generateBestCase(int arr[], int n);
+
+void generateAverageCase(int arr[], int n);
+
 // Función general para medir el tiempo de ejecución de cualquier algoritmo
-double measureTime(int n, void (*sortFunction)(int[], int));
+double measureTime(int n, void (*sortFunction)(int[], int), std::string caseType);
 
 #endif // ALGORITMOS_H

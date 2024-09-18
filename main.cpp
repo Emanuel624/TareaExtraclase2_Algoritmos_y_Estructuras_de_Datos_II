@@ -10,15 +10,15 @@
 #include <cmath> // Para cálculos de logaritmos y potencias
 
 // Función para crear la gráfica de un algoritmo con comportamiento teórico y empírico
-void createGraph(QString algorithmName, void (*sortFunction)(int[], int), QString complexity) {
+void createGraph(QString algorithmName, void (*sortFunction)(int[], int), QString complexity, std::string caseType) {
     // Crear la ventana de la gráfica
     QWidget *graphWindow = new QWidget;
     graphWindow->resize(800, 600);
-    graphWindow->setWindowTitle(algorithmName);
+    graphWindow->setWindowTitle(algorithmName + " (" + QString::fromStdString(caseType) + ")");
 
     // Crear la serie para graficar los tiempos de ejecución empíricos
     QtCharts::QLineSeries *empiricalSeries = new QtCharts::QLineSeries();
-    empiricalSeries->setName("Tiempo de ejecución de " + algorithmName);
+    empiricalSeries->setName("Tiempo de ejecución de " + algorithmName + " (" + QString::fromStdString(caseType) + ")");
 
     // Crear la serie para el comportamiento teórico
     QtCharts::QLineSeries *theoreticalSeries = new QtCharts::QLineSeries();
@@ -33,7 +33,7 @@ void createGraph(QString algorithmName, void (*sortFunction)(int[], int), QStrin
 
     // Generar y medir los tiempos para diferentes tamaños de N
     for (int n = 100; n <= 2000; n += 100) {
-        double timeTaken = measureTime(n, sortFunction);  // Medir el tiempo de ejecución
+        double timeTaken = measureTime(n, sortFunction, caseType);  // Medir el tiempo de ejecución con el caso adecuado
         empiricalSeries->append(n, timeTaken);  // Añadir el valor empírico a la gráfica
         std::cout << "N = " << n << ", Tiempo = " << timeTaken << " segundos" << std::endl;
 
@@ -43,8 +43,10 @@ void createGraph(QString algorithmName, void (*sortFunction)(int[], int), QStrin
             theoreticalTime = n * n;
         } else if (complexity == "O(n log n)") {
             theoreticalTime = n * std::log(n);
-        } else {
-            theoreticalTime = n;  // Comportamiento lineal como caso base
+        } else if (complexity == "O(n)") {
+            theoreticalTime = n;
+        } else if (complexity == "O(1)") {
+            theoreticalTime = 1;
         }
 
         // Escalar el valor teórico según los valores empíricos
@@ -68,7 +70,7 @@ void createGraph(QString algorithmName, void (*sortFunction)(int[], int), QStrin
     QtCharts::QChart *chart = new QtCharts::QChart();
     chart->addSeries(empiricalSeries);
     chart->addSeries(theoreticalSeries);
-    chart->setTitle("Gráfico del " + algorithmName);
+    chart->setTitle("Gráfico del " + algorithmName + " (" + QString::fromStdString(caseType) + ")");
 
     // Añadir ejes X e Y
     QtCharts::QValueAxis *axisX = new QtCharts::QValueAxis;
@@ -117,7 +119,7 @@ int main(int argc, char *argv[]) {
     mainLayout->setContentsMargins(10, 10, 10, 10);  // Establecer márgenes exteriores
 
     // Función para añadir un algoritmo y sus botones a un layout
-    auto addAlgorithmButtons = [&](QString name, void (*sortFunction)(int[], int), QString complexity) {
+    auto addAlgorithmButtons = [&](QString name, void (*sortFunction)(int[], int)) {
         QLabel *label = new QLabel(name);  // Crear el label del algoritmo
 
         // Crear los botones para "Peor Caso", "Mejor Caso" y "Caso Promedio"
@@ -125,9 +127,31 @@ int main(int argc, char *argv[]) {
         QPushButton *mejorCasoButton = new QPushButton("Mejor Caso");
         QPushButton *casoPromedioButton = new QPushButton("Caso Promedio");
 
-        // Conectar los botones con la función createGraph
+        // Definir comportamientos teóricos específicos por cada botón sin condicionales adicionales
         QObject::connect(peorCasoButton, &QPushButton::clicked, [=]() {
-            createGraph(name + " (Peor Caso)", sortFunction, complexity);
+            if (name == "MergeSort") {
+                createGraph(name, sortFunction, "O(n log n)", "worst");
+            } else {
+                createGraph(name, sortFunction, "O(n^2)", "worst");
+            }
+        });
+
+        QObject::connect(mejorCasoButton, &QPushButton::clicked, [=]() {
+            if (name == "BubbleSort") {
+                createGraph(name, sortFunction, "O(n)", "best");
+            } else if (name == "MergeSort") {
+                createGraph(name, sortFunction, "O(n log n)", "best");
+            } else {
+                createGraph(name, sortFunction, "O(n^2)", "best");
+            }
+        });
+
+        QObject::connect(casoPromedioButton, &QPushButton::clicked, [=]() {
+            if (name == "MergeSort") {
+                createGraph(name, sortFunction, "O(n log n)", "average");
+            } else {
+                createGraph(name, sortFunction, "O(n^2)", "average");
+            }
         });
 
         // Crear un layout horizontal para los botones
@@ -149,18 +173,18 @@ int main(int argc, char *argv[]) {
     };
 
     // Añadir algoritmos y sus botones al layout principal
-    addAlgorithmButtons("BubbleSort", bubbleSort, "O(n^2)");
-    addAlgorithmButtons("SelectionSort", selectionSort, "O(n^2)");
-    addAlgorithmButtons("MergeSort", [](int arr[], int n) { mergeSort(arr, 0, n - 1); }, "O(n log n)");
+    addAlgorithmButtons("BubbleSort", bubbleSort);
+    addAlgorithmButtons("SelectionSort", selectionSort);
+    addAlgorithmButtons("MergeSort", [](int arr[], int n) { mergeSort(arr, 0, n - 1); });
 
     // Añadir botones para Sorted Linked List y Binary Search Tree
     addAlgorithmButtons("Sorted Linked List", [](int arr[], int n) {
         // Aquí iría la lógica de ordenación para la lista enlazada ordenada
-    }, "O(n)");
+    });
 
     addAlgorithmButtons("Binary Search Tree Insert", [](int arr[], int n) {
         // Aquí iría la lógica para la inserción en el árbol binario de búsqueda
-    }, "O(log n)");
+    });
 
     // Asignar el layout principal a la ventana
     window.setLayout(mainLayout);
