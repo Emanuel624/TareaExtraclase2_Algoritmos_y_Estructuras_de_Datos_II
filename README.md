@@ -5,7 +5,7 @@ Dentro de los archivos presentes en el repositorio, el importante para poder eje
 Este archivo, puede ejecutarse de diversas formas, ya se desde el propio IDE (Recomendada por simpleza) o por medio de comandos a través del CMD(Terminal)
 
 Recomendaciones para la ejecución del programa:
-1. Verificar que la biblioteca QT esta instalada en su ambiente de programación, ya que la parte gráfica (clave para el programa) fue implementada por medio de dicha librería.
+1. Verificar que la librería QT esta instalada en su ambiente de programación, ya que la parte gráfica (clave para el programa) fue implementada por medio de dicha librería.
 2. En caso de querer ejecutar el programa por medio de la terminal se debe seguir:
    * Compilar el archivo main.cpp
    * Una vez teniendo el archivo compilado utilizar el siguiente comando:
