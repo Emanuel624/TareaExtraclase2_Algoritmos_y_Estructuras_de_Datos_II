@@ -2,20 +2,26 @@
 #ifndef BINARYSEARCHTREE_H
 #define BINARYSEARCHTREE_H
 
-// Definición de la estructura del nodo del árbol binario de búsqueda (BST)
-struct Node {
+#include <string>
+
+// Definicion de la estructura del nodo del árbol binario de búsqueda (BST)
+struct TreeNode {
     int data;
-    Node* left;
-    Node* right;
+    TreeNode* left;
+    TreeNode* right;
 };
 
 // Función para crear un nuevo nodo
-Node* createNode(int data);
+TreeNode* createNode(int data);
 
 // Función para insertar un valor en el BST
-Node* insert(Node* root, int data);
+TreeNode* insert(TreeNode* root, int data);
 
-// Función para imprimir el árbol en orden (in-order traversal)
-void inorderTraversal(Node* root);
+//Obtener el tiempo de insercion
+double measureBSTInsertTime(TreeNode* root, int data);
+
+//Medir el tiempo para cada caso
+double measureBSTInsertTimeWithCase(TreeNode** root, int n, std::string caseType);
+
 
 #endif //BINARYSEARCHTREE_H

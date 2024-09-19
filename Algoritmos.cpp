@@ -1,8 +1,8 @@
 #include "Algoritmos.h"
 #include <chrono>
-#include <random>  // Para generar números aleatorios
+#include <random>  // Para generar numeros aleatorios
 
-// Implementación optimizada de Bubble Sort para arreglos de enteros
+// Implementacion optimizada de Bubble Sort para arreglos de enteros
 void bubbleSort(int arr[], int n) {
     bool swapped;
     for (int i = 0; i < n - 1; i++) {
@@ -16,7 +16,7 @@ void bubbleSort(int arr[], int n) {
                 swapped = true;
             }
         }
-        // Si no hubo intercambios en una pasada completa, el arreglo ya está ordenado
+        // Si no hubo intercambios en una pasada completa, el arreglo ya esta ordenado
         if (!swapped) {
             break;
         }
@@ -24,7 +24,7 @@ void bubbleSort(int arr[], int n) {
 }
 
 
-// Implementación Selection Sort
+// Implementacion Selection Sort
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         int minIndex = i;
@@ -39,7 +39,7 @@ void selectionSort(int arr[], int n) {
     }
 }
 
-// Implementación Merge Sort
+// Implementacion Merge para MergeSort
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -62,6 +62,7 @@ void merge(int arr[], int left, int mid, int right) {
     delete[] rightArr;
 }
 
+//mergeSort como tal
 void mergeSort(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -85,18 +86,18 @@ void generateBestCase(int arr[], int n) {
     }
 }
 
-// Generar un caso promedio (arreglo con números aleatorios)
+// Generar un caso promedio (arreglo con numeros aleatorios)
 void generateAverageCase(int arr[], int n) {
     std::random_device rd;  // Semilla aleatoria
     std::mt19937 gen(rd());  // Generador Mersenne Twister
-    std::uniform_int_distribution<> dist(1, n);  // Distribución uniforme entre 1 y n
+    std::uniform_int_distribution<> dist(1, n);  // Distribucion uniforme entre 1 y n
 
     for (int i = 0; i < n; ++i) {
         arr[i] = dist(gen);  // Llenar el arreglo con valores aleatorios
     }
 }
 
-// Función para medir el tiempo de ejecución de cualquier algoritmo
+// Funcion para medir el tiempo de ejecucion de cualquier algoritmo
 double measureTime(int n, void (*sortFunction)(int[], int), std::string caseType) {
     int* arr = new int[n];
 
@@ -109,7 +110,7 @@ double measureTime(int n, void (*sortFunction)(int[], int), std::string caseType
     }
 
     auto start = std::chrono::high_resolution_clock::now();
-    sortFunction(arr, n);  // Ejecutar la función de ordenamiento
+    sortFunction(arr, n);  // Ejecutar la funcion de ordenamiento
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> duration = end - start;
